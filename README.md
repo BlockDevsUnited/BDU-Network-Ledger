@@ -13,4 +13,6 @@ Members can
   - update their own information
   - deactivate themselves
 
+The contract is upgradable at the behest of the owner. This is a work in progress.
+
 
