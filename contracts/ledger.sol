@@ -12,15 +12,12 @@ contract BDUNetwork is Ownable{
 
   community[] public communities;
 
-  uint public memberCount = 0;
-  uint public activeMemberCount;
+  uint public activeMemberCount; // Not used.
 
   mapping(uint => bool) active;
 
   function addCommunity(string memory _name, string memory _hash) public onlyOwner {
-    communities[memberCount].name = _name;
-    communities[memberCount].hash = _hash;
-    memberCount++;
+    communities.push(community(_name, _hash, owner()));
   }
 
   function activateCommunity(uint _id) public onlyOwner {
@@ -28,15 +25,15 @@ contract BDUNetwork is Ownable{
   }
 
   function addAndActivateCommunity(string memory _name, string memory _hash) public onlyOwner {
-    activateCommunity(memberCount);
     addCommunity(_name, _hash);
+    activateCommunity(communities.length);
   }
 
   function deactiveateCommunity(uint _id) public onlyOwner {
     active[_id] = false;
   }
 
-  function updateCommunityInfo(uint _id,string memory _newName, string memory _newHash, address _newManager) public {
+  function updateCommunity(uint _id,string memory _newName, string memory _newHash, address _newManager) public {
     require(msg.sender == owner() || msg.sender == communities[_id].manager);
     communities[_id].name = _newName;
     communities[_id].hash = _newHash;
