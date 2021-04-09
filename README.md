@@ -15,4 +15,10 @@ Members can
 
 The contract is upgradable at the behest of the owner. This is a work in progress.
 
+###Testnet Deployment
+
+Contract:
+
+Gnosis Safe:
+https://rinkeby.gnosis-safe.io/app/
 
