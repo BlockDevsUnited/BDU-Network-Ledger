@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract BDUNetwork is Ownable{
+contract BDU_Network_Ledger is Ownable{
     
   struct community {
     string name;
