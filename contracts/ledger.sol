@@ -1,45 +1,45 @@
-  pragma solidity ^0.8.0;
+pragma solidity ^0.8.0;
 
-  import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-  contract BDUNetwork is Ownable{
+contract BDUNetwork is Ownable{
     
   struct community {
-      string name;
-      string hash;
-      address manager;
+    string name;
+    string hash;
+    address manager;
   }
 
   community[] public communities;
 
   uint public memberCount = 0;
-
   uint public activeMemberCount;
 
-  mapping(uint=>bool) active;
+  mapping(uint => bool) active;
 
-  function addCommunity(string memory name, string memory hash) public onlyOwner {
-    communities[memberCount].name = name;
-    communities[memberCount].hash = hash;
+  function addCommunity(string memory _name, string memory _hash) public onlyOwner {
+    communities[memberCount].name = _name;
+    communities[memberCount].hash = _hash;
     memberCount++;
   }
 
-  function activateCommunity(uint id) public onlyOwner {
-    active[id] =true;
+  function activateCommunity(uint _id) public onlyOwner {
+    active[_id] = true;
   }
 
-  function addAndActivateCommunity(string memory name, string memory hash) public onlyOwner {
+  function addAndActivateCommunity(string memory _name, string memory _hash) public onlyOwner {
     activateCommunity(memberCount);
-    addCommunity(name,hash);
+    addCommunity(_name, _hash);
   }
 
-  function deactiveateCommunity(uint id) public onlyOwner {
-    active[id]=false;
+  function deactiveateCommunity(uint _id) public onlyOwner {
+    active[_id] = false;
   }
 
-  function updateCommunityInfo(uint id,string memory name, string memory hash, address representative) public {
-    require(msg.sender==owner() || msg.sender==communities[id].manager);
-    communities[id].name = name;
-    communities[memberCount].hash = hash;
+  function updateCommunityInfo(uint _id,string memory _newName, string memory _newHash, address _newManager) public {
+    require(msg.sender == owner() || msg.sender == communities[_id].manager);
+    communities[_id].name = _newName;
+    communities[_id].hash = _newHash;
+    communities[_id].manager = _newManager;
   }
-  }
+}
