@@ -23,3 +23,8 @@ https://rinkeby.etherscan.io/address/0x95D8f8C000d6d6CC16935da7E3AB33751E7E81e3#
 Gnosis Safe:
 https://rinkeby.gnosis-safe.io/app/#/safes/0xf19296d13C4bFaa5B6ec563933Ae98C580486E7e/balances
 
+
+
+TODO
+
+app to view BNL state
