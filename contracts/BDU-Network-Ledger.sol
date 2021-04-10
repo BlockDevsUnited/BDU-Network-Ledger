@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 contract BDU_Network_Ledger{
     
-  address public manager = 0x91B34BE2a4305e4A679196c9bfC484B01005100a;
+  address public manager;
   
   modifier onlyManager {
       require(msg.sender==manager);
@@ -23,6 +23,14 @@ contract BDU_Network_Ledger{
   
   mapping(uint=>bool) active;
  
+  constructor() {
+      manager = msg.sender;
+  }
+  
+  function setManager(address newManager) public onlyManager{
+      manager = newManager;
+  }
+  
   function addCommunity(string memory name, string memory hash) public onlyManager{
     communities[memberCount].name = name;
     communities[memberCount].hash = hash;
