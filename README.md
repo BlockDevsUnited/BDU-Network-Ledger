@@ -18,7 +18,7 @@ The contract is upgradable at the behest of the owner. This is a work in progres
 ###Testnet Deployment
 
 BDU_Network_Ledger Contract:
-https://rinkeby.etherscan.io/address/0xC2eaBA17763ff307afE3D90310583f374335042c#code
+https://rinkeby.etherscan.io/address/0xdD1C3f465366FAFF78F94253096d75c024c3Ec1a#code
 
 Gnosis Safe:
 https://rinkeby.gnosis-safe.io/app/#/safes/0xf19296d13C4bFaa5B6ec563933Ae98C580486E7e/balances
