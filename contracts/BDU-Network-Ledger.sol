@@ -5,7 +5,7 @@ contract BDU_Network_Ledger{
   address public manager;
   
   modifier onlyManager {
-      require(msg.sender==manager);
+      require(msg.sender==manager, "Must be Network Manager");
       _;
   }
     
@@ -13,6 +13,7 @@ contract BDU_Network_Ledger{
       string name;
       string hash;
       address manager;
+      bool active;
   }
   
   community[] public communities;
@@ -21,33 +22,25 @@ contract BDU_Network_Ledger{
   
   uint public activeMemberCount;
   
-  mapping(uint=>bool) active;
- 
   constructor() {
-      manager = msg.sender;
+    manager = msg.sender;
   }
   
   function setManager(address newManager) public onlyManager{
-      manager = newManager;
+    manager = newManager;
   }
   
-  function addCommunity(string memory name, string memory hash) public onlyManager{
-    communities[memberCount].name = name;
-    communities[memberCount].hash = hash;
+  function addCommunity(string memory name, string memory hash, address communityManager,bool active) public onlyManager{
+    communities.push(community(name,hash,communityManager,active));
     memberCount++;
   }
   
   function activateCommunity(uint id) public onlyManager{
-    active[id] =true;
-  }
-  
-  function addAndActivateCommunity(string memory name, string memory hash) public onlyManager{
-    activateCommunity(memberCount);
-    addCommunity(name,hash);
+    communities[id].active = true;
   }
   
   function deactiveateCommunity(uint id) public onlyManager{
-    active[id]=false;
+    communities[id].active = false;
   }
   
   function updateCommunityInfo(uint id,string memory name, string memory hash, address communityManager) public{
