@@ -33,14 +33,21 @@ contract BDU_Network_Ledger{
   function addCommunity(string memory name, string memory hash, address communityManager,bool active) public onlyManager{
     communities.push(community(name,hash,communityManager,active));
     memberCount++;
+    if(active){
+        activeMemberCount++;
+    }
   }
   
   function activateCommunity(uint id) public onlyManager{
+    require(communities[id].active == false,"Community is already active");
     communities[id].active = true;
+    activeMemberCount++;
   }
   
   function deactiveateCommunity(uint id) public onlyManager{
+    require(communities[id].active == true,"Community is already inactive");
     communities[id].active = false;
+    activeMemberCount--;
   }
   
   function updateCommunityInfo(uint id,string memory name, string memory hash, address communityManager) public{
