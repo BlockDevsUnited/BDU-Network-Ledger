@@ -1,42 +1,51 @@
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-
-contract BDU_Network_Ledger is Ownable{
+contract BDU_Network_Ledger{
+    
+  address public manager = 0x91B34BE2a4305e4A679196c9bfC484B01005100a;
+  
+  modifier onlyManager {
+      require(msg.sender==manager);
+      _;
+  }
     
   struct community {
-    string name;
-    string hash;
-    address manager;
+      string name;
+      string hash;
+      address manager;
   }
-
+  
   community[] public communities;
-
-  uint public activeMemberCount; // Not used.
-
-  mapping(uint => bool) active;
-
-  function addCommunity(string memory _name, string memory _hash) public onlyOwner {
-    communities.push(community(_name, _hash, owner()));
+  
+  uint public memberCount = 0;
+  
+  uint public activeMemberCount;
+  
+  mapping(uint=>bool) active;
+ 
+  function addCommunity(string memory name, string memory hash) public onlyManager{
+    communities[memberCount].name = name;
+    communities[memberCount].hash = hash;
+    memberCount++;
   }
-
-  function activateCommunity(uint _id) public onlyOwner {
-    active[_id] = true;
+  
+  function activateCommunity(uint id) public onlyManager{
+    active[id] =true;
   }
-
-  function addAndActivateCommunity(string memory _name, string memory _hash) public onlyOwner {
-    addCommunity(_name, _hash);
-    activateCommunity(communities.length);
+  
+  function addAndActivateCommunity(string memory name, string memory hash) public onlyManager{
+    activateCommunity(memberCount);
+    addCommunity(name,hash);
   }
-
-  function deactiveateCommunity(uint _id) public onlyOwner {
-    active[_id] = false;
+  
+  function deactiveateCommunity(uint id) public onlyManager{
+    active[id]=false;
   }
-
-  function updateCommunity(uint _id,string memory _newName, string memory _newHash, address _newManager) public {
-    require(msg.sender == owner() || msg.sender == communities[_id].manager);
-    communities[_id].name = _newName;
-    communities[_id].hash = _newHash;
-    communities[_id].manager = _newManager;
+  
+  function updateCommunityInfo(uint id,string memory name, string memory hash, address communityManager) public{
+    require(msg.sender==manager || msg.sender==communities[id].manager);
+    communities[id].name = name;
+    communities[id].hash = hash;
+    communities[id].manager = communityManager;
   }
 }
